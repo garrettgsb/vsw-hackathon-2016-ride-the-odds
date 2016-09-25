@@ -1,0 +1,9 @@
+<h1>Hi</h1>
+<p>My name is Joe</p>
+
+<%= form_for(:wager, :url => {:controller => 'wager', :action => 'get_bus'}) do |f| %>
+    <p>Route Number: <br /> <%= f.text_field :route_number %></p>
+    <p>Stop Number: <br /> <%= f.text_field :stop_number %></p>
+      <p>Schedule Time: <br /> <%= f.text_field :scheduled_time %></p>
+    <%= f.submit :Continue %>
+  <% end %>

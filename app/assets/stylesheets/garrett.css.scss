@@ -1,0 +1,23 @@
+body {
+  position: absolute;
+  top: 0;
+  background-image: image-url("bus-station-bw.jpg");
+  background-size: 100% 100%;
+  overflow-x: hidden;
+}
+
+.content {
+  width: 800px;
+  margin: 0px auto;
+  background-color: rgba(255,255,255,0.96);
+}
+
+.under, .bet-time, .over {
+  display: inline-block;
+  margin: 10px 20px;
+  text-align: center;
+}
+
+.heady {
+  width: 800px !important;
+}

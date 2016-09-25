@@ -1,0 +1,33 @@
+<h1>BET</h1>
+
+<div class="bus-info">
+  <p>Route Number: <%= @wager.route_number %></p>
+  <p>Stop Number: <%= @wager.stop_number %></p>
+</div>
+
+<div class="bus-stats">
+  <p id="scheduled_arrival">Scheduled Arrival Time: <%= @wager.scheduled_time %></p>
+  <p id="avg_arrival">Average Arrival Time: <%= @made_up_stuff[:avg_arrival] %></p>
+  <p id="trend">Trend: <%= @made_up_stuff[:trend] %></p>
+  <p id="last-5">Last 5 days:</p>
+  <ul class="last-5-list">
+    <% @made_up_stuff[:last_5].each do |day| %>
+    <li class="last-5-item"><%= day %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="bet-section">
+  <div class="under">
+    <h3>EARLIER</h3>
+    <p>Payout: <%= @made_up_stuff[:early_payout] %></p>
+  </div>
+  <div class="bet-time">
+    <h3><%= @made_up_stuff[:avg_arrival] %></h3>
+  </div>
+  <div class="over">
+    <h3>LATER</h3>
+    <p>Payout: <%= @made_up_stuff[:late_payout] %></p>
+
+  </div>
+</div>
