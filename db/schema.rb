@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925072654) do
+ActiveRecord::Schema.define(version: 20160925094649) do
+
+  create_table "users", force: :cascade do |t|
+    t.text     "username"
+    t.integer  "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "wagers", force: :cascade do |t|
     t.text     "bet_type"
@@ -24,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160925072654) do
     t.text     "over_under"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.boolean  "claimed"
   end
 
 end

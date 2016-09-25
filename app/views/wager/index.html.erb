@@ -1,0 +1,42 @@
+<h2 style="margin-left: 20px;">My Wagers</h2>
+
+<table style="margin-left: 20px;" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Payout</th>
+      <th>Bus Route</th>
+      <th>Stop Number</th>
+      <th>Scheduled Time</th>
+      <th class="mdl-data-table__cell--non-numeric">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @wagers.each do |w| %>
+    <%
+    amount = w.amount || rand(500..1000)
+    odds = w.payout || (rand(8..14).to_f / 10)
+    payout = amount * odds
+    %>
+      <tr>
+        <td><%= amount %></td>
+        <td><%= payout.to_i %></td>
+        <td><%= w.route_number %></td>
+        <td><%= w.stop_number %></td>
+        <td><%= w.scheduled_time %></td>
+        <% if w.actual_time == nil %>
+        <td class="mdl-data-table__cell--non-numeric">
+          <button class="mdl-button mdl-js-button mdl-button--raised" disabled>
+            Pending
+          </button>
+        </td>
+        <% elsif w.actual_time && (w.claimed != True) %>
+        <td> <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="claim<%=w.id%>">Claim!</button></td>
+
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<footer>
+  <p style="visibility: hidden">Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. Lorem ipsum ad infinitum. </p>

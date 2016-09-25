@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title>Google maps</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwxxjdl6kHB4q-Ofw6cER4pYYzQ-rA7gE&sensor=false&language=en"></script>
+        <script type="text/javascript">
+			var counter = 0;
+            var map,
+                currentPositionMarker,
+                mapCenter = new google.maps.LatLng(40.700683, -73.925972),
+                map;
+            options = {timeout:99999999,enableHighAccuracy:true,maximumAge:0};
+            function initializeMap()
+            {
+                map = new google.maps.Map(document.getElementById('map_canvas'), {
+                   zoom: 18,
+                   center: mapCenter,
+                   mapTypeId: google.maps.MapTypeId.ROADMAP
+                 });
+            }
+
+            function locError(error) {
+                // the current position could not be located
+                alert("The current position could not be found!");
+            }
+
+            function setCurrentPosition(pos) {
+                currentPositionMarker = new google.maps.Marker({
+                    map: map,
+                    position: new google.maps.LatLng(
+                        pos.coords.latitude,
+                        pos.coords.longitude
+                    ),
+                    title: "Current Position"
+                });
+                map.panTo(new google.maps.LatLng(
+                        pos.coords.latitude,
+                        pos.coords.longitude
+                    ));
+            }
+
+            function displayAndWatch(position) {
+                // set current position
+                setCurrentPosition(position);
+                // watch position
+                watchCurrentPosition();
+            }
+
+            function watchCurrentPosition() {
+                var positionTimer = navigator.geolocation.watchPosition(
+                    function (position) {
+					
+                        setMarkerPosition(currentPositionMarker, position);
+						displayStops(position);
+						
+                    },error,options);
+            }
+			
+			function error(err) {
+			  console.warn('ERROR(' + err.code + '): ' + err.message);
+			};
+            
+			function displayStops(position){
+			//console.log(position.coords.latitude);
+					$.ajax({
+							 url:"ajax.php",
+							 dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+							//  data: {lat: position.coords.latitude, long: position.coords.longitude},
+						  //
+                             data: {lat: "49.2812081000" , long: "-123.11708340"},
+							 success:function(json){
+							 
+								 
+								 
+								// for (key in json.Stop){
+								for (key=0;key<1;key++){
+									console.log(json.Stop[key].Name);
+      							    theIcon = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+(key+1)+'|00FF00|000000';
+																	
+									displayAddress(json.Stop[key], true, theIcon); 
+
+								 }
+								 
+							 },
+							 error:function(){
+								 console.log("Error");
+							 }      
+							});
+			}
+			
+			
+			function displayAddress(results, status, theIcon) {
+			altLng = document.getElementById('map_canvas');
+				if (google.maps.GeocoderStatus.OK) {
+				  
+				  
+				  
+				  iconPos = {lat:parseFloat(results.Latitude), lng:parseFloat(results.Longitude)};
+				//  iconPos = {lat:49.281287, lng: -123.1170999};// for testing only
+	  
+
+				  altLng.innerHTML = altLng.innerHTML+iconPos+"\n";
+						  var marker = new google.maps.Marker({
+						map: map,
+						labelText: "rrrr",//not working!
+						icon: theIcon,
+						labelVisible: true,
+						title:results.Name,
+						position: iconPos
+					});
+
+					
+				  return 1;
+				} else {
+				  return -1;
+				}
+			  }
+			
+			
+			function setMarkerPosition(marker, position) {
+                marker.setPosition(
+                    new google.maps.LatLng(
+                        position.coords.latitude,
+                        position.coords.longitude)
+                );
+				map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+								counter++;
+				$("#counter").html(counter);
+            }
+
+            function initLocationProcedure() {
+                initializeMap();
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(displayAndWatch, locError);
+					 //displayStops(111);
+                } else {
+                    alert("Your browser does not support the Geolocation API");
+                }
+            }
+
+            $(document).ready(function() {
+                initLocationProcedure();
+            });
+
+        </script>
+    </head>
+
+    <body>
+	<div id ="counter">"counter"</div>
+
+        <div id="map_canvas" style="height:600px;"></div>
+    </body>
+
+</html>

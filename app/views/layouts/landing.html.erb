@@ -5,6 +5,8 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'tidy.css' %>
+    <%= stylesheet_link_tag 'animate.css' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
@@ -17,15 +19,15 @@
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title"><%= User.first.points %> Points</span>
+      <span class="mdl-layout-title"><%= User.first.points %></span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer">
       </div>
       <!-- Navigation. We hide it in small screens. -->
       <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="/wager"><span class="mdl-badge" data-badge="4">My Wagers</span></a>
-        <a class="mdl-navigation__link" href="/shop"><span class="mdl-badge" data-badge="5">Shop</span></a>
-        <a class="mdl-navigation__link" style="background-color: rgba(0,255,0,0.4); border-radius: 4px;" href="/wager/type">Place a Bet</a>
+        <a class="mdl-navigation__link" href="/wager">My Wagers</a>
+        <a class="mdl-navigation__link" href="/shop">Shop</a>
+        <a class="mdl-navigation__link" style="background-color: #C0AE4A; border-radius: 4px;" href="/wager/type">Place a Bet</a>
       </nav>
     </div>
   </header>

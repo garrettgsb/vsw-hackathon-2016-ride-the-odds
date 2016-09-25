@@ -37,14 +37,19 @@ class WagerController < ApplicationController
       avg_arrival: avg_arrival,
       last_5: last_5,
       trend: "Usually Late",
-      early_payout: "0.8",
-      late_payout: "1.2"
+      early_payout: "1.2",
+      late_payout: "0.8"
     }
     render 'wager/bet'
   end
 
   def bus
     render 'wager/bus'
+  end
+
+  def index
+    @wagers = Wager.all
+    render 'wager/index'
   end
 
   def get_bus
@@ -56,6 +61,17 @@ class WagerController < ApplicationController
   end
 
   def type
+  end
+
+  def under
+    # amount = params["amount"]
+    # payout = params["payout"]
+    # User.find(params["id"]).update(:amount => amount, :payout => payout)
+    redirect_to "/wager"
+  end
+
+  def over
+    redirect_to "/wager"
   end
 
   private

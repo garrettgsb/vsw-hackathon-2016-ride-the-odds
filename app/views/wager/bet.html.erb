@@ -1,33 +1,78 @@
-<h1>BET</h1>
-
-<div class="bus-info">
-  <p>Route Number: <%= @wager.route_number %></p>
-  <p>Stop Number: <%= @wager.stop_number %></p>
+<div style="margin-left: 40px; margin-top: -50px;" class="bus-info">
+  <h2>Odds for bus #<%= @wager.route_number %></h2>
+  <h4>Stopping at Stop #<%= @wager.stop_number %> at <%= @wager.scheduled_time %></h4>
 </div>
 
 <div class="bus-stats">
-  <p id="scheduled_arrival">Scheduled Arrival Time: <%= @wager.scheduled_time %></p>
-  <p id="avg_arrival">Average Arrival Time: <%= @made_up_stuff[:avg_arrival] %></p>
-  <p id="trend">Trend: <%= @made_up_stuff[:trend] %></p>
-  <p id="last-5">Last 5 days:</p>
-  <ul class="last-5-list">
-    <% @made_up_stuff[:last_5].each do |day| %>
-    <li class="last-5-item"><%= day %></li>
-    <% end %>
-  </ul>
+  <table style="margin-left: 40px; width: 80%;" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+      <th>Scheduled Arrival Time:</th>
+      <th>Average Arrival Time:</th>
+      <th>Trend</th>
+    <tbody>
+      <tr>
+        <td id="scheduled_arrival"> <%= @wager.scheduled_time %></td>
+        <td id="avg_arrival"><%= @made_up_stuff[:avg_arrival] %></td>
+        <td id="trend"><span style="color: red"><%= @made_up_stuff[:trend] %></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <table style="margin-top: 20px; margin-left: 40px; width: 80%;" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+      <th id="last-5" colspan="5">Last 5 days:</th>
+      </thead>
+      <tbody>
+        <tr class="last-5-list">
+        <% @made_up_stuff[:last_5].each do |day| %>
+            <td class="last-5-item"><%= day %></td>
+        <% end %>
+      </tr>
+      </tbody>
+</table>
 </div>
-
-<div class="bet-section">
+<div class="bet-amount mdl-card mdl-shadow--2dp" style="margin-left: 40px; display: inline-block; margin-top: 10px; width: 80%" align="center">
+  <h4>Amount of points to bet</h4>
+  <input style="font-size: 2em; margin: 5px auto; width: 30%;" class="mdl_textfield__input" type="text" id="bet-amount" value="1000">
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid bet-section" style="margin-left: 40px; width: 80%">
   <div class="under">
-    <h3>EARLIER</h3>
+    <h3>Early</h3>
     <p>Payout: <%= @made_up_stuff[:early_payout] %></p>
   </div>
   <div class="bet-time">
+    <p>Predicted Time</p>
     <h3><%= @made_up_stuff[:avg_arrival] %></h3>
   </div>
-  <div class="over">
-    <h3>LATER</h3>
+  <div class="over" style="background-color: rgba(0,255,0,0.6)">
+    <h3>Late</h3>
     <p>Payout: <%= @made_up_stuff[:late_payout] %></p>
 
   </div>
 </div>
+<script>
+  $(".under").on('click', function(){
+    alert("Yuh!");
+    var bet_amount = $("#bet-amount").val();
+    var payout = <%= @made_up_stuff[:early_payout] %>;
+    $.ajax({
+      type: 'POST',
+      url: '/wager/<%= @wager.id %>/under',
+      data: {
+        amount: bet_amount,
+        payout: payout
+      }
+    });
+  })
+  $(".over").on('click', function(){
+  var bet_amount = $("#bet-amount").val();
+  var payout = <%= @made_up_stuff[:late_payout] %>;
+  $.ajax({
+    type: 'POST',
+    url: '/wager/<%= @wager.id %>/over',
+    data: {
+      amount: bet_amount,
+      payout: payout
+    }
+  });
+});
+</script>
